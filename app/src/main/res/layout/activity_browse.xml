@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkBackground"
+    android:fitsSystemWindows="true"
+    tools:context="com.alphae.rishi.yifyclient.alphae.alphae.rishi.yifyclient.Activities.BrowseActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/browse_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_default_height"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Light"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:subtitleTextColor="@color/secondary_text"
+        app:titleTextColor="@color/darkBackground" />
+
+    <LinearLayout
+        android:id="@+id/browse_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/view_background"
+            android:padding="8dp">
+
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/genre_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ms_alignLabels="false"
+                app:ms_arrowSize="16dp"
+                app:ms_dropdown_height="wrap_content"
+                app:ms_dropdown_max_height="350dp"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_floatingLabelText="floating label"
+                app:ms_hint="@string/genre"
+                app:ms_multiline="false"
+                app:ms_thickness="2dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/view_background"
+            android:padding="8dp">
+
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/sort_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ms_alignLabels="false"
+                app:ms_arrowSize="16dp"
+                app:ms_dropdown_height="wrap_content"
+                app:ms_dropdown_max_height="350dp"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_floatingLabelText="floating label"
+                app:ms_hint="@string/sort_by"
+                app:ms_multiline="false"
+                app:ms_thickness="2dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/view_background"
+                android:padding="8dp">
+
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/order_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_alignLabels="false"
+                    app:ms_arrowSize="16dp"
+                    app:ms_dropdown_height="wrap_content"
+                    app:ms_dropdown_max_height="350dp"
+                    app:ms_enableErrorLabel="false"
+                    app:ms_enableFloatingLabel="false"
+                    app:ms_floatingLabelText="floating label"
+                    app:ms_hint="@string/order_by"
+                    app:ms_multiline="false"
+                    app:ms_thickness="2dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/view_background"
+                android:padding="8dp">
+
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/rating_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="true"
+                    app:ms_alignLabels="false"
+                    app:ms_arrowSize="16dp"
+                    app:ms_dropdown_height="wrap_content"
+                    app:ms_dropdown_max_height="350dp"
+                    app:ms_enableErrorLabel="false"
+                    app:ms_enableFloatingLabel="false"
+                    app:ms_floatingLabelText="floating label"
+                    app:ms_hint="@string/ratings"
+                    app:ms_multiline="false"
+                    app:ms_thickness="2dp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/browse_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/pill_button"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:text="@string/browse" />
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/browse_toolbar" />
+</RelativeLayout>

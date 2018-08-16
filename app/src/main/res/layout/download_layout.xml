@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="168dp"
+    android:id="@+id/download_root"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/view_background"
+    android:backgroundTint="@color/darkBackground"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/movie_quality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="720p" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/folder_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_folder_black_48dp"
+            android:tint="@color/primary" />
+
+        <TextView
+            android:id="@+id/file_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/folder_icon"
+            android:gravity="center"
+            android:textColor="@color/grey"
+            android:textSize="15sp"
+            tools:text="698.8 MB" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:padding="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/seeds"
+                android:textSize="12sp"
+                android:textColor="@color/grey"/>
+            <TextView
+                android:layout_gravity="end"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                tools:text="1353"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/torrent_seeds"/>
+        </LinearLayout>
+
+        <View
+            android:layout_gravity="center"
+            android:layout_width="2dp"
+            android:layout_height="30dp"
+            android:backgroundTint="@color/primary"
+            android:background="@drawable/view_background" />
+
+        <LinearLayout
+            android:padding="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/peers"
+                android:textSize="12sp"
+                android:textColor="@color/grey"/>
+            <TextView
+                android:layout_gravity="start"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                tools:text="1353"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/torrent_peers"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/magnet_button"
+        android:layout_width="152dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:background="@drawable/view_background"
+        android:backgroundTint="@color/primary"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:id="@+id/magnet_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/magnet"
+            android:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/magnet_icon"
+            android:text="@string/magnet"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/torrent_button"
+        android:layout_width="152dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="1"
+        android:background="@drawable/view_background"
+        android:backgroundTint="@color/primary"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:id="@+id/torrent_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_file_download_black_48dp"
+            android:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/torrent_icon"
+            android:text="@string/torrent"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+
+</LinearLayout>

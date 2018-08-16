@@ -1,0 +1,43 @@
+{
+  "project_info": {
+    "project_number": "43457439705",
+    "firebase_url": "https://yify-client.firebaseio.com",
+    "project_id": "yify-client",
+    "storage_bucket": "yify-client.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43457439705:android:334f68a7f9b9080c",
+        "android_client_info": {
+          "package_name": "alphae.download.movies.moviesbay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43457439705-i8rsh93poic8l4eekul8609m26bjd25d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjbkGzDWjjHpVy0ppocbC8OMXUHJOIFAc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      },
+      "admob_app_id": "ca-app-pub-9914032848232792~2858523860"
+    }
+  ],
+  "configuration_version": "1"
+}

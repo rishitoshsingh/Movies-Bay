@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Movies Bay</string>
+    <string name="search">Search</string>
+    <string name="browse">Browse</string>
+    <string name="genre">Genre</string>
+    <string name="sort_by">Sort By</string>
+    <string name="order_by">Order By</string>
+    <string name="ratings">Ratings</string>
+    <string name="home">Home</string>
+    <string name="more_apps">More Apps</string>
+    <string name="description">Description</string>
+    <string name="info">Info</string>
+    <string name="cast">Cast</string>
+    <string name="magnet">Magnet</string>
+    <string name="torrent">Torrent</string>
+    <string name="download">Download</string>
+    <string name="seeds">Seeds</string>
+    <string name="peers">Peers</string>
+    <string name="button_towatch">For more details and Trailers, Tap -></string>
+</resources>
