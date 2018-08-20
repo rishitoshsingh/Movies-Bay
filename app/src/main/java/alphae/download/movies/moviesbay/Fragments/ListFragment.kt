@@ -1,6 +1,13 @@
 package alphae.download.movies.moviesbay.Fragments
 
 
+import alphae.download.movies.moviesbay.Adapters.MovieAdapter
+import alphae.download.movies.moviesbay.Api.Clients.YifyClient
+import alphae.download.movies.moviesbay.Api.ServiceGenerator
+import alphae.download.movies.moviesbay.BuildConfig
+import alphae.download.movies.moviesbay.Listners.PaginationScrollListner
+import alphae.download.movies.moviesbay.POJOs.MovieList.MovieList
+import alphae.download.movies.moviesbay.R
 import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,19 +19,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import alphae.download.movies.moviesbay.Adapters.MovieAdapter
-import alphae.download.movies.moviesbay.Api.Clients.YifyClient
-import alphae.download.movies.moviesbay.Api.ServiceGenerator
-import alphae.download.movies.moviesbay.BuildConfig
-import alphae.download.movies.moviesbay.Listners.PaginationScrollListner
-import alphae.download.movies.moviesbay.POJOs.MovieList.MovieList
-import alphae.download.movies.moviesbay.R
 import com.facebook.ads.AdError
 import com.facebook.ads.NativeAdsManager
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
-import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.recycler_view.*
 import retrofit2.Call
 import retrofit2.Response
@@ -53,16 +52,21 @@ class ListFragment : Fragment() {
 
     private var lastAdPosition: Int = -1
     private val ADS_PER_ITEMS: Int = 9
-    private lateinit var mInterstitialAd: InterstitialAd
+    private var mInterstitialAd: InterstitialAd? = null
 
     companion object {
         fun newInstance() = ListFragment()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mInterstitialAd = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mInterstitialAd = InterstitialAd(this.context)
-        mInterstitialAd.adUnitId = BuildConfig.AdmobInterstisial
+        mInterstitialAd!!.adUnitId = BuildConfig.AdmobInterstisial
 
         minimumRating = arguments?.getString("minimumRating", null)
         genre = arguments?.getString("genre", null)
@@ -80,12 +84,12 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         client = ServiceGenerator.createService(YifyClient::class.java)
 
-        mInterstitialAd.adListener = object : AdListener() {
+        mInterstitialAd?.adListener = object : AdListener() {
             override fun onAdClosed() {
-                mInterstitialAd.loadAd(AdRequest.Builder().build())
+                mInterstitialAd?.loadAd(AdRequest.Builder().build())
             }
         }
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        mInterstitialAd?.loadAd(AdRequest.Builder().build())
 
 
         viewManager = GridLayoutManager(context, 2)
@@ -178,8 +182,8 @@ class ListFragment : Fragment() {
                 alertDialog?.setMessage("We are facing problem with your network. It seems like content is blocked. Please change your network.")
                 alertDialog?.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
-                if (mInterstitialAd.isLoaded) {
-                    mInterstitialAd.show()
+                if (mInterstitialAd != null && mInterstitialAd!!.isLoaded) {
+                    mInterstitialAd!!.show()
                 }
                 alertDialog?.show()
                 Toast.makeText(activity, "Change Network", Toast.LENGTH_SHORT).show()
@@ -187,10 +191,10 @@ class ListFragment : Fragment() {
 
             override fun onResponse(p0: Call<MovieList>?, p1: Response<MovieList>?) {
                 Log.d("response", p1.toString())
-                if (mInterstitialAd.isLoaded) {
-                    mInterstitialAd.show()
+                if (mInterstitialAd != null && mInterstitialAd?.isLoaded!!) {
+                    mInterstitialAd?.show()
                 }
-                try{
+                try {
                     val resultBody: MovieList? = p1?.body()!!
                     val movieCount = resultBody?.data?.movieCount
                     val limit = resultBody?.data?.limit
@@ -200,7 +204,7 @@ class ListFragment : Fragment() {
                     try {
                         for (item in resultBody.data.movies) moviesList.add(item)
                         viewAdapter.notifyDataSetChanged()
-                    loadAdsToList()
+                        loadAdsToList()
                         isLoading = false
                         if (refresh_layout != null) {
                             refresh_layout.isRefreshing = false
@@ -211,7 +215,7 @@ class ListFragment : Fragment() {
                         Log.d("loadFirstPage", ex.toString())
                     }
 
-                }catch (ex:Exception){
+                } catch (ex: Exception) {
                     isLoading = false
                     isLastPage = true
                     Log.d("loadFirstPage", ex.toString())

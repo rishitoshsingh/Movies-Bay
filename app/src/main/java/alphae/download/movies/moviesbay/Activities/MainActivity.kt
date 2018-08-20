@@ -23,6 +23,9 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.support.v4.app.ShareCompat
 import android.support.v7.app.AlertDialog
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 
 
@@ -30,6 +33,11 @@ class MainActivity : AppCompatActivity() {
 
     private var actionSearchView: android.support.v7.widget.SearchView? = null
     private lateinit var mainFragment: ListFragment
+    private var mMainInterstitialAd: InterstitialAd? = null
+    override fun onDestroy() {
+        super.onDestroy()
+        mMainInterstitialAd = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +63,15 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.mainContainer, mainFragment)
                 .disallowAddToBackStack()
                 .commit()
+
+        mMainInterstitialAd = InterstitialAd(this)
+        mMainInterstitialAd?.adUnitId = BuildConfig.AdmobInterstisial
+        mMainInterstitialAd?.loadAd(AdRequest.Builder().build())
+        mMainInterstitialAd?.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                if (mMainInterstitialAd != null) mMainInterstitialAd?.show()
+            }
+        }
 
 
         val extras = intent.extras
