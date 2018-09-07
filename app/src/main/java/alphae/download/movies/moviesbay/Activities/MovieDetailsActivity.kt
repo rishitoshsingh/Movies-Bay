@@ -58,29 +58,11 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var downloadAdapter: DownloadAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private var mColor: Int = 0
-    private var mInterstitialAd: InterstitialAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
         client = ServiceGenerator.createService(YifyClient::class.java)
-
-        mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd!!.adUnitId = BuildConfig.AdmobInterstisial
-        mInterstitialAd!!.loadAd(AdRequest.Builder().build())
-        mInterstitialAd!!.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                val sharedPreferences: SharedPreferences = getSharedPreferences("Notification", Context.MODE_PRIVATE)
-                if (sharedPreferences.getBoolean("Clicked", false)) {
-                    if (mInterstitialAd != null && mInterstitialAd!!.isLoaded) {
-                        mInterstitialAd!!.show()
-                    }
-                    val sharedPreferenceEditor: SharedPreferences.Editor = sharedPreferences.edit()
-                    sharedPreferenceEditor.putBoolean("Clicked", false)
-                    sharedPreferenceEditor.commit()
-                }
-            }
-        }
 
         mColor = resources.getColor(R.color.darkBackground)
         mMovieId = intent.getLongExtra("MovieId", 0)

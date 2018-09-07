@@ -33,16 +33,10 @@ class MainActivity : AppCompatActivity() {
 
     private var actionSearchView: android.support.v7.widget.SearchView? = null
     private lateinit var mainFragment: ListFragment
-    private var mMainInterstitialAd: InterstitialAd? = null
-    override fun onDestroy() {
-        super.onDestroy()
-        mMainInterstitialAd = null
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        MobileAds.initialize(this, BuildConfig.AdMobAppId)
 
         val window = window
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
@@ -63,16 +57,6 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.mainContainer, mainFragment)
                 .disallowAddToBackStack()
                 .commit()
-
-        mMainInterstitialAd = InterstitialAd(this)
-        mMainInterstitialAd?.adUnitId = BuildConfig.AdmobInterstisial
-        mMainInterstitialAd?.loadAd(AdRequest.Builder().build())
-        mMainInterstitialAd?.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                if (mMainInterstitialAd != null) mMainInterstitialAd?.show()
-            }
-        }
-
 
         val extras = intent.extras
         if (extras != null) {

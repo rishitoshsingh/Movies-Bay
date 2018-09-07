@@ -34,42 +34,8 @@ abstract class DownloadAdapter(context: Context, files: ArrayList<Torrent>, colo
     val mContext = context
     val mFiles = files
     val mColor = color
-    private var mRewardedVideoAd: RewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this.mContext)
     private var downloadJob: Int = 0
     private lateinit var mFile: alphae.download.movies.moviesbay.POJOs.MovieDetails.Torrent
-    private lateinit var mInterstitialAd: InterstitialAd
-
-    init {
-        mRewardedVideoAd.rewardedVideoAdListener = object : RewardedVideoAdListener {
-            override fun onRewardedVideoAdClosed() {
-                loadRewardedVideoAd()
-            }
-
-            override fun onRewardedVideoAdLeftApplication() {}
-            override fun onRewardedVideoAdLoaded() {}
-            override fun onRewardedVideoAdOpened() {}
-            override fun onRewardedVideoCompleted() {}
-            override fun onRewarded(p0: RewardItem?) {
-                if (downloadJob == 0) magnet()
-                else torrent()
-            }
-
-            override fun onRewardedVideoStarted() {}
-            override fun onRewardedVideoAdFailedToLoad(p0: Int) {}
-        }
-        loadRewardedVideoAd()
-        mInterstitialAd = InterstitialAd(this.mContext)
-        mInterstitialAd.adUnitId = BuildConfig.AdmobInterstisial
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
-        mInterstitialAd.adListener = object : AdListener() {
-            override fun onAdClosed() {
-                mInterstitialAd.loadAd(AdRequest.Builder().build())
-                if (downloadJob == 0) magnet()
-                else torrent()
-            }
-        }
-
-    }
 
     override fun getItemCount() = mFiles.size
 
@@ -90,20 +56,12 @@ abstract class DownloadAdapter(context: Context, files: ArrayList<Torrent>, colo
 
         holder.movieMagnetButton.setOnClickListener {
             downloadJob = 0
-            if (mRewardedVideoAd.isLoaded) {
-                mRewardedVideoAd.show()
-            } else if (mInterstitialAd.isLoaded) {
-                mInterstitialAd.show()
-            } else magnet()
+            magnet()
 
         }
         holder.movieTorrentButton.setOnClickListener {
             downloadJob = 1
-            if (mRewardedVideoAd.isLoaded) {
-                mRewardedVideoAd.show()
-            } else if (mInterstitialAd.isLoaded) {
-                mInterstitialAd.show()
-            } else torrent()
+            torrent()
         }
     }
 
@@ -176,11 +134,6 @@ abstract class DownloadAdapter(context: Context, files: ArrayList<Torrent>, colo
                     DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
             alertDialog.show()
         }
-    }
-
-    private fun loadRewardedVideoAd() {
-//        mRewardedVideoAd.loadAd(BuildConfig.AdMobRewarded, AdRequest.Builder().build())
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917", AdRequest.Builder().build())
     }
 
 }

@@ -52,21 +52,13 @@ class ListFragment : Fragment() {
 
     private var lastAdPosition: Int = -1
     private val ADS_PER_ITEMS: Int = 9
-    private var mInterstitialAd: InterstitialAd? = null
 
     companion object {
         fun newInstance() = ListFragment()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mInterstitialAd = null
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mInterstitialAd = InterstitialAd(this.context)
-        mInterstitialAd!!.adUnitId = BuildConfig.AdmobInterstisial
 
         minimumRating = arguments?.getString("minimumRating", null)
         genre = arguments?.getString("genre", null)
@@ -83,14 +75,6 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         client = ServiceGenerator.createService(YifyClient::class.java)
-
-        mInterstitialAd?.adListener = object : AdListener() {
-            override fun onAdClosed() {
-                mInterstitialAd?.loadAd(AdRequest.Builder().build())
-            }
-        }
-        mInterstitialAd?.loadAd(AdRequest.Builder().build())
-
 
         viewManager = GridLayoutManager(context, 2)
         viewManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -139,35 +123,6 @@ class ListFragment : Fragment() {
     }
 
 
-    private fun loadAdsToList() {
-        try {
-            val nativeAdsManager = NativeAdsManager(activity!!, BuildConfig.FanNative, 2)
-            nativeAdsManager.setListener(object : NativeAdsManager.Listener {
-                override fun onAdError(adError: AdError) {}
-                override fun onAdsLoaded() {
-                    try {
-                        while (lastAdPosition + ADS_PER_ITEMS < moviesList.size) {
-                            val nextNativeAd = nativeAdsManager.nextNativeAd()
-                            lastAdPosition += ADS_PER_ITEMS
-                            Log.d("AdLoaded fb", "1")
-                            moviesList.add(lastAdPosition, nextNativeAd)
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        Log.d("Error Ad fb", e.toString())
-                    }
-                    viewAdapter.notifyDataSetChanged()
-                }
-            })
-            nativeAdsManager.loadAds()
-        } catch (e: Exception) {
-            val str = "TAG"
-            val stringBuilder = StringBuilder()
-            stringBuilder.append("loadAdsToList: ")
-            stringBuilder.append(e.toString())
-            Log.e(str, stringBuilder.toString())
-        }
-    }
 
     private fun loadFirstPage() {
         val call = callMovieList()
@@ -182,18 +137,12 @@ class ListFragment : Fragment() {
                 alertDialog?.setMessage("We are facing problem with your network. It seems like content is blocked. Please change your network.")
                 alertDialog?.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
-                if (mInterstitialAd != null && mInterstitialAd!!.isLoaded) {
-                    mInterstitialAd!!.show()
-                }
                 alertDialog?.show()
                 Toast.makeText(activity, "Change Network", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(p0: Call<MovieList>?, p1: Response<MovieList>?) {
                 Log.d("response", p1.toString())
-                if (mInterstitialAd != null && mInterstitialAd?.isLoaded!!) {
-                    mInterstitialAd?.show()
-                }
                 try {
                     val resultBody: MovieList? = p1?.body()!!
                     val movieCount = resultBody?.data?.movieCount
@@ -204,7 +153,7 @@ class ListFragment : Fragment() {
                     try {
                         for (item in resultBody.data.movies) moviesList.add(item)
                         viewAdapter.notifyDataSetChanged()
-                        loadAdsToList()
+//                        loadAdsToList()
                         isLoading = false
                         if (refresh_layout != null) {
                             refresh_layout.isRefreshing = false
@@ -240,7 +189,7 @@ class ListFragment : Fragment() {
                 try {
                     for (item in resultBody?.data?.movies!!) moviesList.add(item)
                     viewAdapter.notifyDataSetChanged()
-                    loadAdsToList()
+//                    adsToList()
                     isLoading = false
                     if (refresh_layout != null) {
                         refresh_layout.isRefreshing = false
